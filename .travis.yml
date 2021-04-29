@@ -1,0 +1,9 @@
+language: bash
+
+services:
+  - docker
+
+install:
+  - ./clone-projector-core.sh
+  - ./build-container.sh
+  - docker images

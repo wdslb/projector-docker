@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM debian AS ideDownloader
+FROM debian:10 AS ideDownloader
 
 # prepare tools:
 RUN apt-get update
@@ -36,7 +36,7 @@ ARG buildGradle
 RUN if [ "$buildGradle" = "true" ]; then ./gradlew clean; else echo "Skipping gradle build"; fi
 RUN if [ "$buildGradle" = "true" ]; then ./gradlew :projector-server:distZip; else echo "Skipping gradle build"; fi
 
-FROM debian AS projectorStaticFiles
+FROM debian:10 AS projectorStaticFiles
 
 # prepare tools:
 RUN apt-get update
@@ -69,7 +69,7 @@ RUN true \
 # packages for awt:
     && apt-get install libxext6 libxrender1 libxtst6 libxi6 libfreetype6 -y \
 # packages for user convenience:
-    && apt-get install git bash-completion -y \
+    && apt-get install ca-certificates curl git bash-completion -y \
 # packages for IDEA (to disable warnings):
     && apt-get install procps -y \
 # clean apt to reduce image size:
@@ -95,8 +95,16 @@ RUN true \
 # copy the Projector dir:
 ENV PROJECTOR_DIR /projector
 COPY --from=projectorStaticFiles $PROJECTOR_DIR $PROJECTOR_DIR
+COPY ["jce_policy/jce_policy-8.zip", "/tmp/"]
 
-ENV PROJECTOR_USER_NAME projector-user
+ENV PROJECTOR_USER_NAME projector-user \
+    JAVA_VERSION_MAJOR=8 \
+    JAVA_VERSION_MINOR=202 \
+    JAVA_VERSION_BUILD=08 \
+    JAVA_PACKAGE_SHA256=9a5c32411a6a06e22b69c495b7975034409fa1652d03aeb8eb5b6f59fd4594e0 \
+    JAVA_PACKAGE=jdk \
+    JAVA_JCE=unlimited \
+    JAVA_HOME=/opt/jdk
 
 RUN true \
 # Any command which returns non-zero exit code will cause this shell script to exit immediately:
@@ -110,7 +118,18 @@ RUN true \
     && useradd -m -d /home/$PROJECTOR_USER_NAME -s /bin/bash $PROJECTOR_USER_NAME \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME /home/$PROJECTOR_USER_NAME \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
-    && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh
+    && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
+    && curl -jksSL -o /tmp/jce_policy-${JAVA_VERSION_MAJOR}.zip \
+    "https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz" \
+    && echo "${JAVA_PACKAGE_SHA256}  /tmp/java.tar.gz" > /tmp/java.tar.gz.sha256 \
+    && sha256sum -c /tmp/java.tar.gz.sha256 \
+    && gunzip /tmp/java.tar.gz \
+    && tar -C /opt -xf /tmp/java.tar \
+    && ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk \
+    && cd /tmp && unzip /tmp/jce_policy-${JAVA_VERSION_MAJOR}.zip \
+    && cp -v /tmp/UnlimitedJCEPolicyJDK8/*.jar /opt/jdk/jre/lib/security \
+    && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ $JAVA_HOME/jre/lib/security/java.security \
+    && rm -rf /tmp/*
 
 USER $PROJECTOR_USER_NAME
 ENV HOME /home/$PROJECTOR_USER_NAME
