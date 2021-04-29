@@ -18,3 +18,6 @@ install:
   - ./clone-projector-core.sh
   - ./build-container.sh
   - docker images
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker tag projector-idea-c wdslb/projector-idea-c
+  - docker push wdslb/projector-idea-c
