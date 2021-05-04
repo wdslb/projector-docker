@@ -50,6 +50,8 @@ COPY --from=ideDownloader /ide $PROJECTOR_DIR/ide
 ADD projector-docker/static $PROJECTOR_DIR
 # copy jce policy to the container:
 ADD projector-docker/jce_policy/jce_policy-8.zip /tmp/jce_policy-8.zip
+# copy idea plugins to the container:
+ADD projector-docker/idea_plugins $PROJECTOR_DIR/idea_plugins
 # copy projector:
 COPY --from=projectorGradleBuilder $PROJECTOR_DIR/projector-server/projector-server/build/distributions/projector-server-1.0-SNAPSHOT.zip $PROJECTOR_DIR
 # prepare IDE - apply projector-server:
@@ -123,7 +125,10 @@ RUN true \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
     && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
     && apt-get update \
-    && apt install unzip \
+    && apt install unzip -y \
+    && cd $PROJECTOR_DIR/idea_plugins \
+    && chmod a+x ./download.sh \
+    && ./download.sh \
     && curl -jksSL -o /tmp/java.tar.gz \
     "https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz" \
     && echo "${JAVA_PACKAGE_SHA256}  /tmp/java.tar.gz" > /tmp/java.tar.gz.sha256 \

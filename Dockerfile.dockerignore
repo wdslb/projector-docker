@@ -5,4 +5,5 @@
 !/projector-client/**
 !/projector-server/**
 !/projector-docker/static/**
+!/projector-docker/idea_plugins/**
 !/projector-docker/jce_policy/**
