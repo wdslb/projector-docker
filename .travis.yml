@@ -22,15 +22,16 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
   - docker --version
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
   - docker pull debian:10
   - docker pull amazoncorretto:11
-  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
 
 install:
   - ./clone-projector-core.sh
   - ./build-container.sh
   - docker images
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker tag projector-idea-c wdslb/projector-idea-c
   - docker push wdslb/projector-idea-c
+  - docker rmi wdslb/projector-idea-c -f
   - docker rmi projector-idea-c -f
