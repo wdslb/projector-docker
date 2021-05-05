@@ -125,7 +125,7 @@ RUN true \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
     && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
     && apt-get update \
-    && apt install unzip -y \
+    && apt install curl jq unzip -y \
     && cd $PROJECTOR_DIR/idea_plugins \
     && chmod a+x ./download.sh \
     && ./download.sh \
