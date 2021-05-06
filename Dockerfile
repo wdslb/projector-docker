@@ -50,6 +50,8 @@ COPY --from=ideDownloader /ide $PROJECTOR_DIR/ide
 ADD projector-docker/static $PROJECTOR_DIR
 # copy jce policy to the container:
 ADD projector-docker/jce_policy/jce_policy-8.zip /tmp/jce_policy-8.zip
+# copy build tools to the container:
+ADD projector-docker/build_tools $PROJECTOR_DIR/build_tools
 # copy idea plugins to the container:
 ADD projector-docker/idea_plugins $PROJECTOR_DIR/idea_plugins
 # copy projector:
