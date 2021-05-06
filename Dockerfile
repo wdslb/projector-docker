@@ -129,6 +129,9 @@ RUN true \
     && cd $PROJECTOR_DIR/idea_plugins \
     && chmod a+x ./download.sh \
     && ./download.sh \
+    && cd $PROJECTOR_DIR/build_tools \
+    && chmod a+x ./download_and_unzip.sh \
+    && ./download_and_unzip.sh \
     && curl -jksSL -o /tmp/java.tar.gz \
     "https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz" \
     && echo "${JAVA_PACKAGE_SHA256}  /tmp/java.tar.gz" > /tmp/java.tar.gz.sha256 \

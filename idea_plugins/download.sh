@@ -9,3 +9,4 @@ done < list.txt
 
 IDEA_SPRING_TOOLS_URL=$(curl -s "https://api.github.com/repos/wdslb/idea-spring-tools/releases/latest" | jq -r '.assets[0].browser_download_url')
 curl -JOL "$IDEA_SPRING_TOOLS_URL"
+# EOF
