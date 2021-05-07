@@ -122,7 +122,7 @@ RUN true \
     && apt install curl locales jq unzip -y \
     && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
     && locale-gen \
-    && update-locale LANG=en_US.UTF-8 \
+    && update-locale LANG=en_US.utf8 \
 # move run script:
     && mv $PROJECTOR_DIR/run.sh run.sh \
 # change user to non-root (http://pjdietz.com/2016/08/28/nginx-in-docker-without-root.html):
