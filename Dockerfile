@@ -127,7 +127,10 @@ RUN true \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
     && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
     && apt-get update \
-    && apt install curl jq unzip -y \
+    && apt install curl locales jq unzip -y \
+    && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
+    && locale-gen \
+    && update-locale LANG=en_US.UTF-8 \
     && cd $PROJECTOR_DIR/idea_plugins \
     && chmod a+x ./download.sh \
     && ./download.sh \
