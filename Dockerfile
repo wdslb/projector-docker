@@ -119,7 +119,9 @@ RUN true \
 # Activate debugging to show execution details: all commands will be printed before execution
     && set -x \
     && apt-get update \
-    && apt install curl locales jq unzip -y \
+    && apt install curl locales jq tzdata unzip -y \
+    && rm -f /etc/localtime \
+    && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
     && locale-gen \
     && update-locale LANG=en_US.utf8 \

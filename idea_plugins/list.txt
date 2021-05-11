@@ -1,4 +1,6 @@
 cn.cloud.auto.restful.tool
+com.baomidou.plugin.idea.mybatisx
+izhangzhihao.rainbow.brackets
 mobi.hsz.idea.gitignore
 org.jetbrains.kotlin
 org.jetbrains.plugins.spotbugs
