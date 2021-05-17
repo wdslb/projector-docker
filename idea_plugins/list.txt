@@ -1,8 +1,10 @@
 cn.cloud.auto.restful.tool
+com.aegamesi.java_visualizer.plugin
 com.baomidou.plugin.idea.mybatisx
 izhangzhihao.rainbow.brackets
 mobi.hsz.idea.gitignore
 org.jetbrains.kotlin
 org.jetbrains.plugins.spotbugs
+org.mapstruct.intellij
 org.sonarlint.idea
 String%20Manipulation
