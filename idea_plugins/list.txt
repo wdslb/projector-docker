@@ -1,10 +1,13 @@
 cn.cloud.auto.restful.tool
-com.aegamesi.java_visualizer.plugin
 com.baomidou.plugin.idea.mybatisx
+com.notime.intellijPlugin.backgroundImagePlus
 izhangzhihao.rainbow.brackets
+krasa.CpuUsageIndicator
 mobi.hsz.idea.gitignore
+org.jetbrains.jumpToLine
 org.jetbrains.kotlin
 org.jetbrains.plugins.spotbugs
 org.mapstruct.intellij
 org.sonarlint.idea
+GrepConsole
 String%20Manipulation
