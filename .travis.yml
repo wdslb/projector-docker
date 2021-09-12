@@ -2,6 +2,7 @@ jobs:
   include:
     - language: shell
       os: linux
+      dist: focal
       arch: amd64
       services:
         - docker
@@ -28,6 +29,7 @@ jobs:
         - docker rmi projector-idea-c -f
     - language: shell
       os: linux
+      dist: focal
       arch: arm64
       services:
         - docker
