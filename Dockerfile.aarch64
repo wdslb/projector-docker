@@ -147,7 +147,6 @@ RUN true \
     && echo "${ZIP_CHECKSUM}  /tmp/${ZIP_NAME}" > "/tmp/${ZIP_NAME}.sha256" \
     && curl -JLO "${ZIP_URL}" \
     && sha256sum -c "/tmp/${ZIP_NAME}.sha256" \
-    && gunzip "${ZIP_NAME}" \
     && tar -C /opt -xf "/tmp/${ZIP_NAME}" \
     && ln -s "/opt/${JDK_VER}" /opt/jdk \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ $JAVA_HOME/jre/lib/security/java.security \
