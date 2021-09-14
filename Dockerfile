@@ -112,8 +112,7 @@ ENV PROJECTOR_USER_NAME=projector-user \
     JAVA_PACKAGE_SHA256=9a5c32411a6a06e22b69c495b7975034409fa1652d03aeb8eb5b6f59fd4594e0 \
     JAVA_PACKAGE=jdk \
     JAVA_JCE=unlimited \
-    JAVA_HOME=/opt/jdk \
-    PATH=${PATH}:/opt/jdk/bin
+    JAVA_HOME=/opt/jdk
 
 RUN true \
 # Any command which returns non-zero exit code will cause this shell script to exit immediately:

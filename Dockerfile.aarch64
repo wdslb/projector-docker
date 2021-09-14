@@ -102,9 +102,7 @@ RUN true \
 ENV PROJECTOR_DIR /projector
 COPY --from=projectorStaticFiles $PROJECTOR_DIR $PROJECTOR_DIR
 
-ENV PROJECTOR_USER_NAME=projector-user \
-    JAVA_HOME=/opt/jdk \
-    PATH=${PATH}:/opt/jdk/bin
+ENV PROJECTOR_USER_NAME=projector-user
 
 RUN true \
 # Any command which returns non-zero exit code will cause this shell script to exit immediately:
