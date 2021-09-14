@@ -24,12 +24,12 @@ jobs:
         - docker pull debian:10
         - docker pull amazoncorretto:11
       install:
-        - ./clone-projector-core.sh
-        - ./build-container-aarch64.sh
+        - travis_wait bash ./clone-projector-core.sh
+        - travis_wait bash ./build-container-aarch64.sh
         - docker images
-        - docker tag projector-idea-c wdslb/projector-idea-c
-        - docker push wdslb/projector-idea-c
-        - docker rmi wdslb/projector-idea-c -f
+        - docker tag projector-idea-c wdslb/projector-idea-c-arm64v8
+        - docker push wdslb/projector-idea-c-arm64v8
+        - docker rmi wdslb/projector-idea-c-arm64v8 -f
         - docker rmi projector-idea-c -f
     - language: shell
       os: linux
@@ -55,11 +55,11 @@ jobs:
         - docker pull debian:10
         - docker pull amazoncorretto:11
       install:
-        - ./clone-projector-core.sh
-        - ./build-container.sh
+        - travis_wait bash ./clone-projector-core.sh
+        - travis_wait bash ./build-container.sh
         - docker images
-        - docker tag projector-idea-c wdslb/projector-idea-c
-        - docker push wdslb/projector-idea-c
-        - docker rmi wdslb/projector-idea-c -f
+        - docker tag projector-idea-c wdslb/projector-idea-c-amd64
+        - docker push wdslb/projector-idea-c-amd64
+        - docker rmi wdslb/projector-idea-c-amd64 -f
         - docker rmi projector-idea-c -f
 
