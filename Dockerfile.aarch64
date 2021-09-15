@@ -123,6 +123,7 @@ RUN true \
     && useradd -m -d /home/$PROJECTOR_USER_NAME -s /bin/bash $PROJECTOR_USER_NAME \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME /home/$PROJECTOR_USER_NAME \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
+    && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/jbr \
     && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
     && cd $PROJECTOR_DIR/idea_plugins \
     && chmod a+x ./download.sh \
@@ -133,6 +134,8 @@ RUN true \
     && chmod a+x ./download_and_unzip.sh \
     && ./download_and_unzip.sh \
     && rm -f ./download_and_unzip.sh ./*.sha512 ./*.sha256 \
+    && cd $PROJECTOR_DIR/ide/ \
+    && rm -rf jbr/ \
     && cd /tmp \
     && ZIP_CHECKSUM=$(curl -X 'GET' -jLs  'https://api.adoptium.net/v3/assets/feature_releases/8/ga?architecture=aarch64&heap_size=normal&image_type=jdk&jvm_impl=hotspot&os=linux&page=0&page_size=1&project=jdk&sort_method=DATE&sort_order=DESC&vendor=adoptium' \
     -H 'accept: application/json' | jq -r -M .[0].binaries[0].package.checksum) \
@@ -148,12 +151,16 @@ RUN true \
     && tar -C /opt -xf "/tmp/${ZIP_NAME}" \
     && ln -s "/opt/${JDK_VER}" /opt/jdk \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ /opt/jdk/jre/lib/security/java.security \
+    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr-11_0_12-linux-aarch64-b1504.27.tar.gz" \
+    && tar xf jbr-11_0_12-linux-aarch64-b1504.27.tar.gz \
+    && mv jbr $PROJECTOR_DIR/ide/ \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/cache/apt
 
 USER $PROJECTOR_USER_NAME
-ENV HOME /home/$PROJECTOR_USER_NAME
+ENV HOME /home/$PROJECTOR_USER_NAME \
+    IDEA_JDK $PROJECTOR_DIR/ide/jbr
 
 EXPOSE 8887
 
