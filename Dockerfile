@@ -133,6 +133,7 @@ RUN true \
     && useradd -m -d /home/$PROJECTOR_USER_NAME -s /bin/bash $PROJECTOR_USER_NAME \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME /home/$PROJECTOR_USER_NAME \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
+    && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/jbr \
     && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
     && cd $PROJECTOR_DIR/idea_plugins \
     && chmod a+x ./download.sh \
@@ -143,6 +144,9 @@ RUN true \
     && chmod a+x ./download_and_unzip.sh \
     && ./download_and_unzip.sh \
     && rm -f ./download_and_unzip.sh ./*.sha512 ./*.sha256 \
+    && cd $PROJECTOR_DIR/ide/ \
+    && rm -rf jbr/ \
+    && cd /tmp \
     && curl -jksSL -o /tmp/java.tar.gz \
     "https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz" \
     && echo "${JAVA_PACKAGE_SHA256}  /tmp/java.tar.gz" > /tmp/java.tar.gz.sha256 \
@@ -153,6 +157,9 @@ RUN true \
     && cd /tmp && unzip /tmp/jce_policy-${JAVA_VERSION_MAJOR}.zip \
     && cp -v /tmp/UnlimitedJCEPolicyJDK8/*.jar /opt/jdk/jre/lib/security \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ $JAVA_HOME/jre/lib/security/java.security \
+    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_12-linux-x64-b1504.27.tar.gz" \
+    && tar xf jbr_jcef-11_0_12-linux-x64-b1504.27.tar.gz \
+    && mv jbr $PROJECTOR_DIR/ide/ \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/cache/apt

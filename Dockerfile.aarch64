@@ -159,8 +159,8 @@ RUN true \
     && rm -rf /var/cache/apt
 
 USER $PROJECTOR_USER_NAME
-ENV HOME /home/$PROJECTOR_USER_NAME \
-    IDEA_JDK $PROJECTOR_DIR/ide/jbr
+ENV HOME=/home/$PROJECTOR_USER_NAME \
+    IDEA_JDK=$PROJECTOR_DIR/ide/jbr
 
 EXPOSE 8887
 
