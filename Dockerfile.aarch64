@@ -147,7 +147,7 @@ RUN true \
     && sha256sum -c "/tmp/${ZIP_NAME}.sha256" \
     && tar -C /opt -xf "/tmp/${ZIP_NAME}" \
     && ln -s "/opt/${JDK_VER}" /opt/jdk \
-    && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ $JAVA_HOME/jre/lib/security/java.security \
+    && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ /opt/jdk/jre/lib/security/java.security \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/cache/apt
