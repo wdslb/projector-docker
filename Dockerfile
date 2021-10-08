@@ -120,7 +120,7 @@ RUN true \
 # Activate debugging to show execution details: all commands will be printed before execution
     && set -x \
     && apt-get update \
-    && apt install curl locales jq tzdata unzip -y \
+    && apt install curl locales nano jq sudo tzdata unzip vim -y \
     && rm -f /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
@@ -135,6 +135,7 @@ RUN true \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/jbr \
     && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
+    && usermod -aG sudo $PROJECTOR_USER_NAME \
     && cd $PROJECTOR_DIR/idea_plugins \
     && chmod a+x ./download.sh \
     && ./download.sh \
@@ -157,8 +158,8 @@ RUN true \
     && cd /tmp && unzip /tmp/jce_policy-${JAVA_VERSION_MAJOR}.zip \
     && cp -v /tmp/UnlimitedJCEPolicyJDK8/*.jar /opt/jdk/jre/lib/security \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ $JAVA_HOME/jre/lib/security/java.security \
-    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_12-linux-x64-b1504.27.tar.gz" \
-    && tar xf jbr_jcef-11_0_12-linux-x64-b1504.27.tar.gz \
+    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_12-linux-x64-b1715.4.tar.gz" \
+    && tar xf jbr_jcef-11_0_12-linux-x64-b1715.4.tar.gz \
     && mv jbr $PROJECTOR_DIR/ide/ \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \
