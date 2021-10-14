@@ -125,7 +125,7 @@ RUN true \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/jbr \
     && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
-    && mkpasswd -l 12 -d 3 -c 3 -C 3 $PROJECTOR_USER_NAME \
+    && expect_mkpasswd -l 12 -d 3 -c 3 -C 3 $PROJECTOR_USER_NAME \
     && usermod -aG sudo $PROJECTOR_USER_NAME \
     && cd $PROJECTOR_DIR/idea_plugins \
     && chmod a+x ./download.sh \
