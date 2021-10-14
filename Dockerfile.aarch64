@@ -110,7 +110,7 @@ RUN true \
 # Activate debugging to show execution details: all commands will be printed before execution
     && set -x \
     && apt-get update \
-    && apt install curl locales nano jq sudo tzdata unzip vim -y \
+    && apt install curl expect locales nano jq sudo tzdata unzip vim -y \
     && rm -f /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
@@ -125,6 +125,7 @@ RUN true \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/bin \
     && chown -R $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME $PROJECTOR_DIR/ide/jbr \
     && chown $PROJECTOR_USER_NAME.$PROJECTOR_USER_NAME run.sh \
+    && mkpasswd -l 12 -d 3 -c 3 -C 3 $PROJECTOR_USER_NAME \
     && usermod -aG sudo $PROJECTOR_USER_NAME \
     && cd $PROJECTOR_DIR/idea_plugins \
     && chmod a+x ./download.sh \
