@@ -8,3 +8,4 @@
 !/projector-docker/build_tools/**
 !/projector-docker/idea_plugins/**
 !/projector-docker/jce_policy/**
+!/projector-docker/jdk/**
