@@ -1,0 +1,1 @@
+https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz	https://mirrors.sdwu.edu.cn/java/jdk-8u202-linux-x64.tar.gz	https://www.leadwaycloud.com/storage/software/jdk-8u202-linux-x64.tar.gz	http://deb.digdeo.fr/java-archives/jdk-8u202-linux-x64.tar.gz

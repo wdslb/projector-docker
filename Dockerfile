@@ -55,6 +55,8 @@ ADD projector-docker/jce_policy/jce_policy-8.zip /tmp/jce_policy-8.zip
 ADD projector-docker/build_tools $PROJECTOR_DIR/build_tools
 # copy idea plugins to the container:
 ADD projector-docker/idea_plugins $PROJECTOR_DIR/idea_plugins
+# copy jdk download sources to the container:
+ADD projector-docker/jdk/jdk.txt /tmp/jdk.txt
 # copy projector:
 COPY --from=projectorGradleBuilder $PROJECTOR_DIR/projector-server/projector-server/build/distributions/projector-server.zip $PROJECTOR_DIR
 # prepare IDE - apply projector-server:
@@ -120,7 +122,7 @@ RUN true \
 # Activate debugging to show execution details: all commands will be printed before execution
     && set -x \
     && apt-get update \
-    && apt install curl expect locales nano jq sudo tzdata unzip vim -y \
+    && apt install curl expect locales nano jq sudo tzdata unzip vim aria2 -y \
     && rm -f /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
@@ -149,18 +151,19 @@ RUN true \
     && cd $PROJECTOR_DIR/ide/ \
     && rm -rf jbr/ \
     && cd /tmp \
-    && curl -jksSL -o /tmp/java.tar.gz \
-    "https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz" \
-    && echo "${JAVA_PACKAGE_SHA256}  /tmp/java.tar.gz" > /tmp/java.tar.gz.sha256 \
+    && aria2c -i jdk.txt \
+    && mv jdk-8u202-linux-x64.tar.gz java.tar.gz \
+    && echo "${JAVA_PACKAGE_SHA256}  /tmp/java.tar.gz" > /java.tar.gz.sha256 \
     && sha256sum -c /tmp/java.tar.gz.sha256 \
     && gunzip /tmp/java.tar.gz \
     && tar -C /opt -xf /tmp/java.tar \
     && ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk \
-    && cd /tmp && unzip /tmp/jce_policy-${JAVA_VERSION_MAJOR}.zip \
+    && cd /tmp \
+    && unzip /tmp/jce_policy-${JAVA_VERSION_MAJOR}.zip \
     && cp -v /tmp/UnlimitedJCEPolicyJDK8/*.jar /opt/jdk/jre/lib/security \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ $JAVA_HOME/jre/lib/security/java.security \
-    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_12-linux-x64-b1715.4.tar.gz" \
-    && tar xf jbr_jcef-11_0_12-linux-x64-b1715.4.tar.gz \
+    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_13-linux-x64-b1751.19.tar.gz" \
+    && tar xf jbr_jcef-11_0_13-linux-x64-b1751.19.tar.gz \
     && mv jbr $PROJECTOR_DIR/ide/ \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \
