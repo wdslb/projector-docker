@@ -154,7 +154,7 @@ RUN true \
     && cd /tmp \
     && aria2c -i jdk.txt \
     && mv jdk-8u202-linux-x64.tar.gz java.tar.gz \
-    && echo "${JAVA_PACKAGE_SHA256}  /tmp/java.tar.gz" > /java.tar.gz.sha256 \
+    && echo "${JAVA_PACKAGE_SHA256}  /tmp/java.tar.gz" > /tmp/java.tar.gz.sha256 \
     && sha256sum -c /tmp/java.tar.gz.sha256 \
     && gunzip /tmp/java.tar.gz \
     && tar -C /opt -xf /tmp/java.tar \
