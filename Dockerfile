@@ -106,6 +106,7 @@ RUN true \
 ENV PROJECTOR_DIR /projector
 COPY --from=projectorStaticFiles $PROJECTOR_DIR $PROJECTOR_DIR
 COPY --from=projectorStaticFiles /tmp/jce_policy-8.zip /tmp/
+COPY --from=projectorStaticFiles /tmp/jdk.txt /tmp/
 
 ENV PROJECTOR_USER_NAME=projector-user \
     JAVA_VERSION_MAJOR=8 \
