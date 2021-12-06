@@ -1,13 +1,13 @@
 #!/bin/bash
 
-GRADLE_URL="https://services.gradle.org/distributions/gradle-6.8.2-bin.zip"
+GRADLE_URL="https://services.gradle.org/distributions/gradle-6.9.1-bin.zip"
 curl -JOL "$GRADLE_URL"
 
-GRADLE_CHECKSUM_URL="https://services.gradle.org/distributions/gradle-6.8.2-bin.zip.sha256"
+GRADLE_CHECKSUM_URL="https://services.gradle.org/distributions/gradle-6.9.1-bin.zip.sha256"
 curl -JOL "$GRADLE_CHECKSUM_URL"
 
-diff -Z <(sha256sum gradle-6.8.2-bin.zip | awk '{print $1}') <(cat gradle-6.8.2-bin.zip.sha256)
-mv ./gradle-6.8.2-bin.zip /opt
+diff -Z <(sha256sum gradle-6.9.1-bin.zip | awk '{print $1}') <(cat gradle-6.9.1-bin.zip.sha256)
+mv ./gradle-6.9.1-bin.zip /opt
 
 MAVEN_URL="https://mirrors.ocf.berkeley.edu/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip"
 curl -JOL "$MAVEN_URL"
@@ -19,10 +19,10 @@ diff -Z <(sha512sum apache-maven-3.6.3-bin.zip | awk '{print $1}') <(cat apache-
 mv ./apache-maven-3.6.3-bin.zip /opt
 
 cd /opt || exit
-unzip gradle-6.8.2-bin.zip
+unzip gradle-6.9.1-bin.zip
 unzip apache-maven-3.6.3-bin.zip
 
-rm -f gradle-6.8.2-bin.zip apache-maven-3.6.3-bin.zip
+rm -f gradle-6.9.1-bin.zip apache-maven-3.6.3-bin.zip
 
 cd / || exit
 
