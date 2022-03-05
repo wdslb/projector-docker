@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM debian:10 AS ideDownloader
+FROM debian:buster-slim AS ideDownloader
 
 # prepare tools:
 RUN apt-get update
@@ -37,7 +37,7 @@ RUN if [ "$buildGradle" = "true" ]; then ./gradlew clean; else echo "Skipping gr
 RUN if [ "$buildGradle" = "true" ]; then ./gradlew :projector-server:distZip; else echo "Skipping gradle build"; fi
 RUN cd projector-server/build/distributions && find . -maxdepth 1 -type f -name projector-server-*.zip -exec mv {} projector-server.zip \;
 
-FROM debian:10 AS projectorStaticFiles
+FROM debian:buster-slim AS projectorStaticFiles
 
 # prepare tools:
 RUN apt-get update
@@ -63,7 +63,7 @@ RUN mv projector-server $PROJECTOR_DIR/ide/projector-server
 RUN mv $PROJECTOR_DIR/ide-projector-launcher.sh $PROJECTOR_DIR/ide/bin
 RUN chmod 644 $PROJECTOR_DIR/ide/projector-server/lib/*
 
-FROM debian:10
+FROM debian:buster-slim
 
 RUN true \
 # Any command which returns non-zero exit code will cause this shell script to exit immediately:
@@ -110,7 +110,7 @@ RUN true \
 # Activate debugging to show execution details: all commands will be printed before execution
     && set -x \
     && apt-get update \
-    && apt install curl expect locales nano jq sudo tzdata unzip vim -y \
+    && apt install curl expect locales nano jq openssl-dev sudo tzdata unzip vim -y \
     && rm -f /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
@@ -153,8 +153,8 @@ RUN true \
     && tar -C /opt -xf "/tmp/${ZIP_NAME}" \
     && ln -s "/opt/${JDK_VER}" /opt/jdk \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ /opt/jdk/jre/lib/security/java.security \
-    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr-11_0_13-linux-aarch64-b1751.19.tar.gz" \
-    && tar xf jbr-11_0_13-linux-aarch64-b1751.19.tar.gz \
+    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr-11_0_13-linux-aarch64-b1751.25.tar.gz" \
+    && tar xf jbr-11_0_13-linux-aarch64-b1751.25.tar.gz \
     && mv jbr $PROJECTOR_DIR/ide/ \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \

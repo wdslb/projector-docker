@@ -123,7 +123,7 @@ RUN true \
 # Activate debugging to show execution details: all commands will be printed before execution
     && set -x \
     && apt-get update \
-    && apt install curl expect locales nano jq sudo tzdata unzip vim aria2 -y \
+    && apt install curl expect locales nano jq openssl-dev sudo tzdata unzip vim aria2 -y \
     && rm -f /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
@@ -163,8 +163,8 @@ RUN true \
     && unzip /tmp/jce_policy-${JAVA_VERSION_MAJOR}.zip \
     && cp -v /tmp/UnlimitedJCEPolicyJDK8/*.jar /opt/jdk/jre/lib/security \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ $JAVA_HOME/jre/lib/security/java.security \
-    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_13-linux-x64-b1751.19.tar.gz" \
-    && tar xf jbr_jcef-11_0_13-linux-x64-b1751.19.tar.gz \
+    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_13-linux-x64-b1751.25.tar.gz" \
+    && tar xf jbr_jcef-11_0_13-linux-x64-b1751.25.tar.gz \
     && mv jbr $PROJECTOR_DIR/ide/ \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \
