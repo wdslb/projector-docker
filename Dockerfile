@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-FROM debian:10 AS ideDownloader
+FROM debian:buster-slim AS ideDownloader
 
 # prepare tools:
 RUN apt-get update
@@ -37,7 +37,7 @@ RUN if [ "$buildGradle" = "true" ]; then ./gradlew clean; else echo "Skipping gr
 RUN if [ "$buildGradle" = "true" ]; then ./gradlew :projector-server:distZip; else echo "Skipping gradle build"; fi
 RUN cd projector-server/build/distributions && find . -maxdepth 1 -type f -name projector-server-*.zip -exec mv {} projector-server.zip \;
 
-FROM debian:10 AS projectorStaticFiles
+FROM debian:buster-slim AS projectorStaticFiles
 
 # prepare tools:
 RUN apt-get update
@@ -67,7 +67,7 @@ RUN mv projector-server $PROJECTOR_DIR/ide/projector-server
 RUN mv $PROJECTOR_DIR/ide-projector-launcher.sh $PROJECTOR_DIR/ide/bin
 RUN chmod 644 $PROJECTOR_DIR/ide/projector-server/lib/*
 
-FROM debian:10
+FROM debian:buster-slim
 
 RUN true \
 # Any command which returns non-zero exit code will cause this shell script to exit immediately:
