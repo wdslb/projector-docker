@@ -110,7 +110,7 @@ RUN true \
 # Activate debugging to show execution details: all commands will be printed before execution
     && set -x \
     && apt-get update \
-    && apt install curl expect locales nano jq openssl-dev sudo tzdata unzip vim -y \
+    && apt install curl expect locales nano jq openssl libssl-dev sudo tzdata unzip vim -y \
     && rm -f /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen \
