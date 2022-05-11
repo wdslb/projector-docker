@@ -24,9 +24,9 @@ jobs:
         - travis_wait bash ./clone-projector-core.sh
         - travis_wait bash ./build-container.sh
         - docker images
-        - docker tag projector-idea-c wdslb/projector-idea-c-amd64:2021.3.2
-        - docker push wdslb/projector-idea-c-amd64:2021.3.2
-        - docker rmi wdslb/projector-idea-c-amd64:2021.3.2 -f
+        - docker tag projector-idea-c wdslb/projector-idea-c-amd64:2021.2.4
+        - docker push wdslb/projector-idea-c-amd64:2021.2.4
+        - docker rmi wdslb/projector-idea-c-amd64:2021.2.4 -f
         - docker rmi projector-idea-c -f
     - language: shell
       os: linux
@@ -52,7 +52,7 @@ jobs:
         - travis_wait bash ./clone-projector-core.sh
         - travis_wait bash ./build-container-aarch64.sh
         - docker images
-        - docker tag projector-idea-c wdslb/projector-idea-c-arm64v8:2021.3.2
-        - docker push wdslb/projector-idea-c-arm64v8:2021.3.2
-        - docker rmi wdslb/projector-idea-c-arm64v8:2021.3.2 -f
+        - docker tag projector-idea-c wdslb/projector-idea-c-arm64v8:2021.2.4
+        - docker push wdslb/projector-idea-c-arm64v8:2021.2.4
+        - docker rmi wdslb/projector-idea-c-arm64v8:2021.2.4 -f
         - docker rmi projector-idea-c -f

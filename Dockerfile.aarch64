@@ -153,8 +153,8 @@ RUN true \
     && tar -C /opt -xf "/tmp/${ZIP_NAME}" \
     && ln -s "/opt/${JDK_VER}" /opt/jdk \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ /opt/jdk/jre/lib/security/java.security \
-    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr-11_0_13-linux-aarch64-b1751.25.tar.gz" \
-    && tar xf jbr-11_0_13-linux-aarch64-b1751.25.tar.gz \
+    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr-11_0_14_1-linux-aarch64-b2043.45.tar.gz" \
+    && tar xf jbr-11_0_14_1-linux-aarch64-b2043.45.tar.gz \
     && mv jbr $PROJECTOR_DIR/ide/ \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \

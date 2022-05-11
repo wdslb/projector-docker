@@ -163,8 +163,8 @@ RUN true \
     && unzip /tmp/jce_policy-${JAVA_VERSION_MAJOR}.zip \
     && cp -v /tmp/UnlimitedJCEPolicyJDK8/*.jar /opt/jdk/jre/lib/security \
     && sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=60/ $JAVA_HOME/jre/lib/security/java.security \
-    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_13-linux-x64-b1751.25.tar.gz" \
-    && tar xf jbr_jcef-11_0_13-linux-x64-b1751.25.tar.gz \
+    && curl -JLO "https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-11_0_14_1-linux-x64-b2043.45.tar.gz" \
+    && tar xf jbr_jcef-11_0_14_1-linux-x64-b2043.45.tar.gz \
     && mv jbr $PROJECTOR_DIR/ide/ \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/* \
