@@ -146,7 +146,7 @@ RUN true \
     && ZIP_URL=$(curl -X 'GET' -jLs  'https://api.adoptium.net/v3/assets/feature_releases/8/ga?architecture=aarch64&heap_size=normal&image_type=jdk&jvm_impl=hotspot&os=linux&page=0&page_size=1&project=jdk&sort_method=DATE&sort_order=DESC&vendor=adoptium' \
     -H 'accept: application/json' | jq -r -M .[0].binaries[0].package.link) \
     && JDK_VER=$(curl -X 'GET' -jLs  'https://api.adoptium.net/v3/assets/feature_releases/8/ga?architecture=aarch64&heap_size=normal&image_type=jdk&jvm_impl=hotspot&os=linux&page=0&page_size=1&project=jdk&sort_method=DATE&sort_order=DESC&vendor=adoptium' \
-    -H 'accept: application/json' | jq -r -M .[0].binaries[0].scm_ref) \
+    -H 'accept: application/json' | jq -r -M .[0].release_name) \
     && echo "${ZIP_CHECKSUM}  /tmp/${ZIP_NAME}" > "/tmp/${ZIP_NAME}.sha256" \
     && curl -JLO "${ZIP_URL}" \
     && sha256sum -c "/tmp/${ZIP_NAME}.sha256" \
